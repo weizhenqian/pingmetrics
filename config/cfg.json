@@ -1,0 +1,10 @@
+{
+    "debug": false,
+    "fpath": "",
+    "identity": {
+        "specify": "",
+        "shell": "jq -r '.local' /etc/info.json"
+    },
+    "ingnore": {
+    }
+}
