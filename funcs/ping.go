@@ -9,9 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-
-	"github.com/open-falcon/falcon-plus/common/model"
-	"github.com/open-falcon/falcon-plus/modules/agent/g"
+	"../basic"
+	"../g"
 )
 
 var fpath string
@@ -81,7 +80,7 @@ func fping(ips []string) {
 		maxDelay := "0"
 		lossPk := "100"
 		ip := ""
-		mvs := []*model.MetricValue{}
+		mvs := []*MetricValue{}
 		for {
 			line, err2 := reader.ReadString('\n')
 			if err2 != nil || io.EOF == err2 {
@@ -162,7 +161,7 @@ func ping(ip string) {
 	MinDelay := GaugeValue("ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
 	MaxDelay := GaugeValue("ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
 	AvgDelay := GaugeValue("ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
-	mvs := []*model.MetricValue{LossPk, MinDelay, MaxDelay, AvgDelay}
+	mvs := []*MetricValue{LossPk, MinDelay, MaxDelay, AvgDelay}
 	now := time.Now().Unix()
 	for j := 0; j < len(mvs); j++ {
 		mvs[j].Step = 60
