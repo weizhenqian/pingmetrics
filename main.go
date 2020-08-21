@@ -1,28 +1,23 @@
 package main
 
 import (
-		"flag"
-		"os"
-		"fmt"
-		"./g"
-		"./funcs"
+	"flag"
+	"os"
+	"./g"
+	"./funcs"
 )
 
 var (
-	vers *bool
+	cfg *string
 	help *bool
-	cfg  *string
+
 )
 
 func init() {
-	cfg = flag.String("c", "cfg.json", "configuration file")
-	vers = flag.Bool("v", false, "display the version.")
+	cfg  = flag.String("c", "cfg.json", "configuration file")
 	help = flag.Bool("h", false, "print this help.")
 	flag.Parse()
-	if *vers {
-		fmt.Println("Version:", version)
-		os.Exit(0)
-	}
+
 
 	if *help {
 		flag.Usage()
@@ -32,6 +27,6 @@ func init() {
 
 func main() {
 	g.ParseConfig(*cfg)
-	UpdateSSNetState()
-	PingMetrics()
+	funcs.UpdateSSNetState()
+	funcs.PingMetrics()
 }

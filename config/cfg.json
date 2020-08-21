@@ -1,9 +1,9 @@
 {
     "debug": false,
-    "fpath": "",
+    "fpath": "/data/server/falcon-agent-2.1.0/plugin/tool/fping",
     "identity": {
         "specify": "",
-        "shell": "jq -r '.local' /etc/info.json"
+        "shell": "/bin/jq -r '.local_ip' /etc/info.json"
     },
     "ingnore": {
     }

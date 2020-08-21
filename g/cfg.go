@@ -4,6 +4,7 @@ import (
         "encoding/json"
         "sync"
         "os/exec"
+	"strings"
         "github.com/golang/glog"
         "github.com/toolkits/file"
 )
@@ -12,7 +13,7 @@ import (
 type GlobalConfig struct {
         Debug      bool            `json:"debug"`
 	Fpath      string          `json:"fpath"`
-	Identity   *IdentityConfig `json:"indetity"`
+	Identity   *IdentityConfig `json:"identity"`
 	Ingore     []string        `json:"ignore"`
 }
 

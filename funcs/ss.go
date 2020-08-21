@@ -3,6 +3,7 @@ package funcs
 import (
 	"github.com/toolkits/nux"
 	"../g"
+//	"../basic"
 	"bufio"
 	"fmt"
 	"io"
@@ -46,8 +47,8 @@ func UpdateSSNetState() {
 	lines4 := loadData("/proc/net/tcp")
 	lines6 := loadData("/proc/net/tcp6")
 	lines := append(lines4, lines6...)
-	ip := g.Endpoint()
-	remoteIpSet := SetNew()
+	ip,_ := g.Endpoint()
+	remoteIpSet := g.SetNew()
 	for _, line := range lines {
 		//fmt.Println(line)
 		l := removeAllSpace(strings.Split(line, " "))
@@ -78,11 +79,13 @@ func UpdateSSNetState() {
 		if State == "LISTEN" {
 			continue
 		}
+		/*
 		//排除config配置中忽略的IP列表
-		Ignorelist := g.GlobalConfig.Ingore
-		if IsContain(Ignorelist,RemoteIp) {
+		Ignorelist := g.Config().Ingore
+		if basic.IsContain(Ignorelist,RemoteIp) {
 			continue
 		}
+		*/
 
 		//只过滤通过本地IP去调用服务的IP，有的机器多网卡，只会检测一块网卡，
 		//因为有的公网机器ping公网地址没有意义
@@ -92,9 +95,6 @@ func UpdateSSNetState() {
 
 	}
 
-	if Config().Debug {
-		log.Println("INFO: Ping ip list: ", remoteIpSet.List())
-	}
 	updateRemoteIpList(remoteIpSet.List())
 
 }
