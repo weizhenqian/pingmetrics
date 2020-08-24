@@ -2,10 +2,12 @@ package funcs
 
 import (
         "bufio"
-        "io"
+		"io"
+		"os"
+		"encoding/json"
         "log"
         "fmt"
-	"sync"
+		"sync"
         "time"
         "os/exec"
         "strings"
@@ -14,6 +16,7 @@ import (
 )
 
 var wg sync.WaitGroup
+var mvs = []*basic.MetricValue{}
 
 func Pings(flag bool) {
 	if flag {
@@ -23,6 +26,11 @@ func Pings(flag bool) {
 			wg.Add(1)
 		}
 		wg.Wait()
+		b, err := json.Marshal(mvs)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		os.Stdout.Write(b)
 		close(EndPing)
 	}
 }
@@ -70,7 +78,7 @@ func ping(ip string) {
 	MinDelay := basic.GaugeValue("ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
 	MaxDelay := basic.GaugeValue("ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
 	AvgDelay := basic.GaugeValue("ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
-	mvs := []*basic.MetricValue{LossPk, MinDelay, MaxDelay, AvgDelay}
+	mvs = append(mvs, LossPk, MinDelay, AvgDelay, MaxDelay)
 	now := time.Now().Unix()
 	for j := 0; j < len(mvs); j++ {
 		mvs[j].Step = 60
@@ -78,5 +86,4 @@ func ping(ip string) {
 		mvs[j].Timestamp = now
 
 	}
-	fmt.Println("ping result:", mvs)
 }
