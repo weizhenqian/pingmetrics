@@ -13,11 +13,10 @@ func IsContain(items []string, item string) bool {
 	return false
 }
 
-func NewMetricValue(metric string, val interface{}, dataType string, tags ...string) *MetricValue {
+func NewMetricValue(metric string, val interface{}, tags ...string) *MetricValue {
 	mv := MetricValue{
 		Metric: metric,
 		Value:  val,
-		Type:   dataType,
 	}
 
 	size := len(tags)
@@ -30,5 +29,5 @@ func NewMetricValue(metric string, val interface{}, dataType string, tags ...str
 }
 
 func GaugeValue(metric string, val interface{}, tags ...string) *MetricValue {
-	return NewMetricValue(metric, val, "GAUGE", tags...)
+	return NewMetricValue(metric, val, tags...)
 }

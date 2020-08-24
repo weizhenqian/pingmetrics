@@ -3,14 +3,16 @@ package funcs
 import (
         "bufio"
         "io"
-        "log"
-	"fmt"
-	"time"
+		"log"
+		"encoding/json"
+		"os"
+		"fmt"
+		"time"
         "os/exec"
         "path/filepath"
         "strings"
         "../g"
-	"../basic"
+		"../basic"
 )
 
 // 使用fping做ping监控
@@ -78,7 +80,11 @@ func fping(ips []string) {
 			mvs[j].Timestamp = now
 
 		}
-		fmt.Println("ping result:", mvs)
+		b, err := json.Marshal(mvs)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		os.Stdout.Write(b)
 		//关闭chan
 		close(EndPing)
 	}(fpingCmd, hostname)
