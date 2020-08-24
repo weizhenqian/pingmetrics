@@ -74,10 +74,10 @@ func ping(ip string) {
 		}
 	}
 	cmd.Wait()
-	LossPk := basic.GaugeValue("ping.loss", lossPk, fmt.Sprintf("ip=%s", ip))
-	MinDelay := basic.GaugeValue("ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
-	MaxDelay := basic.GaugeValue("ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
-	AvgDelay := basic.GaugeValue("ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
+	LossPk := basic.GaugeValue("net.ping.loss", lossPk, fmt.Sprintf("ip=%s", ip))
+	MinDelay := basic.GaugeValue("net.ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
+	MaxDelay := basic.GaugeValue("net.ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
+	AvgDelay := basic.GaugeValue("net.ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
 	mvs = append(mvs, LossPk, MinDelay, AvgDelay, MaxDelay)
 	now := time.Now().Unix()
 	for j := 0; j < len(mvs); j++ {

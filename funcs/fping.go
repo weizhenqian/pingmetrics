@@ -56,16 +56,16 @@ func fping(ips []string) {
 				lossPkS := strings.Split(packge[4], "/")[2]
 				lossPk = strings.Split(lossPkS, "%")[0]
 
-				LossPk := basic.GaugeValue("ping.loss", lossPk, fmt.Sprintf("ip=%s", ip))
+				LossPk := basic.GaugeValue("net.ping.loss", lossPk, fmt.Sprintf("ip=%s", ip))
 				if len(packge) >= 7 {
 					rrt := strings.Split(packge[7], "/")
 					minDelay = rrt[0]
 					avgDelay = rrt[1]
 					maxDelay = rrt[2]
 					// log.Debug(ip, minDelay, avgDelay, maxDelay, lossPk)
-					MinDelay := basic.GaugeValue("ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
-					MaxDelay := basic.GaugeValue("ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
-					AvgDelay := basic.GaugeValue("ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
+					MinDelay := basic.GaugeValue("net.ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
+					MaxDelay := basic.GaugeValue("net.ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))
+					AvgDelay := basic.GaugeValue("net.ping.avg", avgDelay, fmt.Sprintf("ip=%s", ip))
 					mvs = append(mvs, LossPk, MinDelay, AvgDelay, MaxDelay)
 				} else {
 					mvs = append(mvs, LossPk)
