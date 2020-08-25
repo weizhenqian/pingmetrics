@@ -29,5 +29,6 @@ func NewMetricValue(metric string, val interface{}, tags ...string) *MetricValue
 }
 
 func GaugeValue(metric string, val interface{}, tags ...string) *MetricValue {
+	val,_ =  strconv.ParseFloat(val,64)
 	return NewMetricValue(metric, val, tags...)
 }

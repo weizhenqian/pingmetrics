@@ -84,6 +84,5 @@ func ping(ip string) {
 		mvs[j].Step = 60
 		mvs[j].Endpoint = hostname
 		mvs[j].Timestamp = now
-
 	}
 }
