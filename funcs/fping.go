@@ -16,12 +16,6 @@ import (
 		"../basic"
 )
 
-var (
-	minDelay float64 = 0
-	avgDelay float64 = 0
-	maxDelay float64 = 0
-	lossPk float64 = 100
-)
 
 // 使用fping做ping监控
 func fping(ips []string) {
@@ -46,6 +40,12 @@ func fping(ips []string) {
 		}
 		cmd.Start()
 		reader := bufio.NewReader(stderr)
+		var (
+			minDelay float64 = 0
+			avgDelay float64 = 0
+			maxDelay float64 = 0
+			lossPk float64 = 100
+		)
 		ip := ""
 		mvs := []*basic.MetricValue{}
 		for {

@@ -18,12 +18,6 @@ import (
 
 var wg sync.WaitGroup
 var mvs = []*basic.MetricValue{}
-var (
-	minDelay float64 = 0
-	avgDelay float64 = 0
-	maxDelay float64 = 0
-	lossPk float64 = 100
-)
 
 func Pings(flag bool) {
 	if flag {
@@ -59,6 +53,13 @@ func ping(ip string) {
 		return
 	}
 	reader := bufio.NewReader(stdout)
+
+	var (
+		minDelay float64 = 0
+		avgDelay float64 = 0
+		maxDelay float64 = 0
+		lossPk float64 = 100
+	)
 	for {
 		line, err2 := reader.ReadString('\n')
 		if err2 != nil || io.EOF == err2 {
