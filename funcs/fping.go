@@ -54,14 +54,14 @@ func fping(ips []string) {
 				packge := strings.Fields(line)
 				ip = packge[0]
 				lossPkS := strings.Split(packge[4], "/")[2]
-				lossPk = strings.Split(lossPkS, "%")[0]
+				lossPk,_ = strconv.ParseFloat(strings.Split(lossPkS, "%")[0],64)
 
 				LossPk := basic.GaugeValue("net.ping.loss", lossPk, fmt.Sprintf("ip=%s", ip))
 				if len(packge) >= 7 {
 					rrt := strings.Split(packge[7], "/")
-					minDelay = rrt[0]
-					avgDelay = rrt[1]
-					maxDelay = rrt[2]
+					minDelay,_ = strconv.ParseFloat(rrt[0],64)
+					avgDelay,_ = strconv.ParseFloat(rrt[0],64)
+					maxDelay,_ = strconv.ParseFloat(rrt[0],64)
 					// log.Debug(ip, minDelay, avgDelay, maxDelay, lossPk)
 					MinDelay := basic.GaugeValue("net.ping.min", minDelay, fmt.Sprintf("ip=%s", ip))
 					MaxDelay := basic.GaugeValue("net.ping.max", maxDelay, fmt.Sprintf("ip=%s", ip))

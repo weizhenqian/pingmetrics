@@ -63,14 +63,15 @@ func ping(ip string) {
 		}
 		if strings.Contains(line, "packets transmitted") {
 			packge := strings.Fields(line)
-			lossPk = strings.Split(packge[5], "%")[0]
+			lossPk,_ = strconv.ParseFloat(strings.Split(packge[5], "%")[0],64)
+
 		}
 		if strings.Contains(line, "rtt min/avg/max/mdev") {
 			rrttmp := strings.Fields(line)
 			rrt := strings.Split(rrttmp[3], "/")
-			minDelay = rrt[0]
-			avgDelay = rrt[1]
-			maxDelay = rrt[2]
+			minDelay,_ = strconv.ParseFloat(rrt[0],64)
+			avgDelay,_ = strconv.ParseFloat(rrt[0],64)
+			maxDelay,_ = strconv.ParseFloat(rrt[0],64)
 		}
 	}
 	cmd.Wait()

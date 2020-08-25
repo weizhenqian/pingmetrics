@@ -29,6 +29,5 @@ func NewMetricValue(metric string, val interface{}, tags ...string) *MetricValue
 }
 
 func GaugeValue(metric string, val interface{}, tags ...string) *MetricValue {
-	val =  val.(float64)
 	return NewMetricValue(metric, val, tags...)
 }
